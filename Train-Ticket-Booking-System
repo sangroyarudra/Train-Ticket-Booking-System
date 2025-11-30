@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+
+void getPassengerDetails(char name[], int *age, char source[], char destination[]);
+void showTrains(char source[], char destination[]);
+void processBooking(char name[], int age, char source[], char destination[], int train_no, int num_tickets);
+void removeNewline(char *str);
+int isValidTrain(int train_no);
+
+int main() {
+    char name[50];
+    int age;
+    char source[30], destination[30];
+    int train_no;
+    int num_tickets;
+
+    printf("=====================================\n");
+    printf("     TRAIN TICKET BOOKING SYSTEM     \n");
+    printf("=====================================\n");
+
+    getPassengerDetails(name, &age, source, destination);
+    showTrains(source, destination);
+
+    do {
+        printf("Enter train number: ");
+        scanf("%d", &train_no);
+
+        if (!isValidTrain(train_no)) {
+            printf("❌ Invalid Train Number! Please enter a valid train number.\n");
+        }
+    } while (!isValidTrain(train_no));
+
+    printf("Enter number of tickets: ");
+    scanf("%d", &num_tickets);
+
+    processBooking(name, age, source, destination, train_no, num_tickets);
+
+    return 0;
+}
+
+void removeNewline(char *str) {
+    str[strcspn(str, "\n")] = 0;
+}
+
+void getPassengerDetails(char name[], int *age, char source[], char destination[]) {
+    getchar();
+    printf("\nEnter passenger name: ");
+    fgets(name, 50, stdin);
+    removeNewline(name);
+
+    printf("Enter age: ");
+    scanf("%d", age);
+
+    printf("Enter source station: ");
+    scanf("%s", source);
+
+    printf("Enter destination station: ");
+    scanf("%s", destination);
+}
+
+void showTrains(char source[], char destination[]) {
+    printf("\nAvailable Trains:\n");
+    printf("1. 12345 - Express A (%s ➝ %s)\n", source, destination);
+    printf("2. 67890 - Express B (%s ➝ %s)\n", source, destination);
+    printf("3. 11223 - Express C (%s ➝ %s)\n", source, destination);
+    printf("-------------------------------------\n");
+}
+
+int isValidTrain(int train_no) {
+    return (train_no == 12345 || train_no == 67890 || train_no == 11223);
+}
+
+void processBooking(char name[], int age, char source[], char destination[], int train_no, int num_tickets) {
+    printf("\nProcessing your booking...\n\n");
+    printf("========== BOOKING SUMMARY ==========\n");
+    printf("Passenger Name : %s\n", name);
+    printf("Age           : %d\n", age);
+    printf("Source        : %s\n", source);
+    printf("Destination   : %s\n", destination);
+    printf("Train Number  : %d\n", train_no);
+    printf("Tickets       : %d\n", num_tickets);
+    printf("=====================================\n");
+    printf("Thank you for booking with us!\n");
+}
